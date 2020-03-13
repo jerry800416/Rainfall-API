@@ -1,11 +1,11 @@
 <?php   
     $TowerID = $_REQUEST['TowerID'];
+    $SupporterID = $_REQUEST['SupporterID'];
     $target_time = $_REQUEST['target_time'];
     $type = $_REQUEST['type'];
-
     // $str = '2019121008-2019121209';
     $t = explode("-",$target_time);
-    
+
     $year = floor($t[0]/1000000);
     $t[0] = $t[0]%1000000;
     $month = floor($t[0]/10000);
@@ -27,7 +27,7 @@
         // print($target_time_end);
 
     }
-   
+    
     // echo $target_time;
     // echo date('Y-m-d H:00:00',$target_time);
     // $TowerID = 34;
@@ -41,15 +41,30 @@
     date_default_timezone_set('Asia/Taipei');
     // get time_now
     // $date_now ="".date("Y-m-d H:00:00");
-
-    $web_dbname = "TowerBase_WEB";
-
-    // connect  DB
     $cur_db = mysqli_connect($servername,$username,$password)
-        or die("sql connect failed!<br>");
+            or die("sql connect failed!<br>");
     if(!$cur_db)
        die("error<br>");
     mysqli_query($cur_db, 'SET NAMES utf8');
+    // print_r($results_supporter);
+    if($SupporterID != NULL){
+        
+        $web_dbname = "TowerBase_Gridwell";
+        // connect  DB
+        mysqli_select_db($cur_db,$web_dbname) or
+            die("select failed<br>");
+        $sql_supporter="SELECT Relation.tower_id,Relation.sink_id FROM Relation WHERE Relation.sink_id =".$SupporterID." ORDER BY tower_id ASC";
+        $result_supporter = mysqli_query($cur_db,$sql_supporter);
+        $results_supporter = array();
+        while ($row = mysqli_fetch_assoc($result_supporter)) {  
+                $results_supporter[] = $row;     
+        }
+        mysqli_free_result($result_supporter);
+        $TowerID= $results_supporter[0]["tower_id"];
+    }
+    
+    $web_dbname = "TowerBase_WEB";
+
     
     mysqli_select_db($cur_db,$web_dbname) or
         die("select failed<br>");
@@ -128,7 +143,7 @@
             //echo $results_three_hour;
         }
     }
-    $all = json_encode($all,JSON_UNESCAPED_UNICODE);
+    $all = json_encode($all,JSON_PRETTY_PRINT);
     echo $all;
 
     mysqli_close($cur_db);

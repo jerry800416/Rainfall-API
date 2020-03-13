@@ -1,13 +1,15 @@
 ## Rainfall API 
 >[time=Thu, Feb 20, 2020 4:05 PM]
 ### 用途
-查詢資料庫內對應塔號的月雨量、日雨量、時雨量、以及三小時雨量。
+查詢資料庫內對應塔號或支持物號的月雨量、日雨量、時雨量、以及三小時雨量。
 
 ### 用法
-網址後面設定變數值：分別有TowerID、target_time、type。
-#### TowerID(必填)
-直接打上 TowerID=["想查詢的塔號"]
+網址後面設定變數值：分別有TowerID、SupporterID、target_time、type。
+#### TowerID / SupporterID (必填)
+直接打上 TowerID=["想查詢的塔號"] 或 SupporterID=["想查詢的支持物號"]
 >如果要查35號塔：TowerID=35
+>如果要查46404支持物編號：SupporterID=46404
+<font color = red> 注意！如果兩者皆有選填，將以支持物編號優先查詢結果</font>
 
 #### target_time(必填)
 時間有兩種查法：
