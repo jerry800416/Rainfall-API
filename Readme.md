@@ -8,6 +8,7 @@
 #### TowerID / SupporterID (必填)
 直接打上 TowerID=["想查詢的塔號"] 或 SupporterID=["想查詢的支持物號"]
 >如果要查35號塔：TowerID=35
+>
 >如果要查46404支持物編號：SupporterID=46404
 > 
 ><font color = red> 注意！如果兩者皆有選填，將以支持物編號優先查詢結果</font>
